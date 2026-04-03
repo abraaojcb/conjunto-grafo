@@ -8,6 +8,7 @@ private:
     int** adj;
     int* adjTam;
     int* adjCap;
+    int numArestas;
     int V;
 
     void alocarAdj();
@@ -18,6 +19,7 @@ private:
     void dfsVisitar(int v, bool* vis) const;
     bool dfsAlcanca(int v, int destino, bool* vis) const;
     bool dfsCircuito(int v, int* cor) const;
+    bool dfsCircuitoAux(int v, int pai, int* cor) const;
     void dfsMarcar(int v, bool* vis) const;
 
 public:
@@ -29,6 +31,15 @@ public:
     void adicionarAresta(int u, int v);
     bool existeAresta(int u, int v) const;
     int grau(int v) const;
+
+    // operadores
+    Grafo& operator+=(int* aresta);   // g += int[2]
+    bool   operator^(int* par) const; // g ^ int[2]
+    const int* operator()(int v) const; // g(v) -> vizinhos
+    int    operator~() const;         // ~g -> num arestas
+    Grafo  operator|(const Grafo& outro) const;
+    Grafo  operator&(const Grafo& outro) const;
+    Grafo  operator-(const Grafo& outro) const;
 
     // busca
     void bfs(int origem) const;
